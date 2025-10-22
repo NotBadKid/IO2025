@@ -16,20 +16,16 @@ def ask():
 
     text = speech_to_text.transcribe(file)
 
-    if not text_filter.is_safe(text):
-        return jsonify({
-            "answer": "Przepraszam, nie mogę odpowiedzieć na to pytanie.",
-            "audio_url": ""
-        })
 
-    query_vector = embeddings.get_embedding(text)
+
+    query_vector = embeddings.create_embedding(text)
     similar = qdrant_db.search_similar(query_vector)
 
     if similar:
         answer = similar
     else:
-        answer = llm_client.ask_llm(text)
-        qdrant_db.save_entry(text, answer, query_vector)
+        answer = llm_client.explain_and_answer(text)
+        qdrant_db.save_entry(text, answer, query_vector['embedding'])
 
     audio_url = tts.text_to_speech(answer)
 
