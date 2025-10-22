@@ -1,24 +1,24 @@
 /* --- Podstawowe ustawienia strony --- */
 body {
     font-family: 'Nunito', sans-serif;
-    background-color: #DDE9F5;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    transition: background-color 0.3s ease;
 }
 
 /* --- Główny kontener aplikacji --- */
 .chat-container {
     width: 375px;
     min-height: 650px;
-    background-color: #E6F0F8;
     border-radius: 30px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    transition: background-color 0.3s ease;
 }
 
 /* --- 1. Górny pasek (Header) --- */
@@ -35,19 +35,23 @@ body {
     background-color: #DDEAF3;
     border-radius: 20px;
     padding: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .icon-sun {
     font-size: 24px;
     margin-right: 8px;
-    filter: saturate(0.5);
+    transition: all 0.3s ease;
+    padding: 4px 8px;
+    border-radius: 15px;
 }
 
 .toggle-night-selected {
-    background-color: #4A90E2;
     border-radius: 15px;
     padding: 4px 8px;
     line-height: 1;
+    transition: all 0.3s ease;
 }
 
 .icon-moon {
@@ -69,36 +73,33 @@ body {
 .character-name {
     font-size: 20px;
     font-weight: 800;
-    color: #3C4B64;
     margin-bottom: 15px;
+    transition: color 0.3s ease;
 }
 
 .speech-bubble {
-    background-color: #FFFFFF;
     padding: 15px 25px;
     border-radius: 20px;
     font-size: 18px;
     font-weight: 700;
-    color: #333;
     margin-bottom: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     text-align: center;
+    transition: all 0.3s ease;
 }
 
 .character-avatar {
-    width: 340px; /* Zwiększony rozmiar */
+    width: 340px;
     height: auto;
-    margin-top: auto; /* Przesuwa lisa na sam dół */
-    margin-bottom: -5px; /* Minimalne przesunięcie, aby dotykał białego panelu */
+    margin-top: auto;
+    margin-bottom: -5px;
     object-fit: contain;
     max-width: 100%;
-    /* Usunięte border-radius: 50% - teraz nie będzie okrągły */
-    border-radius: 0; /* Wyłączone zaokrąglenie */
+    border-radius: 0;
 }
 
 /* --- 3. Dolny panel (Footer) --- */
 .chat-footer {
-    background-color: #FFFFFF;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     padding: 20px;
@@ -108,6 +109,7 @@ body {
     position: relative;
     height: 90px;
     box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
 }
 
 .mic-button {
@@ -152,9 +154,83 @@ body {
     right: 30px;
     top: 50%;
     transform: translateY(-50%);
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .undo-button:hover {
     background-color: #E0E0E0;
+}
+
+/* --- Style dla trybu ciemnego --- */
+body.dark-theme {
+    background-color: #1a1a2e;
+}
+
+body.dark-theme .chat-container {
+    background-color: #16213e;
+}
+
+body.dark-theme .character-name {
+    color: #e6e6e6;
+}
+
+body.dark-theme .speech-bubble {
+    background-color: #0f3460;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .chat-footer {
+    background-color: #0f3460;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .undo-button {
+    background-color: #1a1a2e;
+    color: #cccccc;
+}
+
+body.dark-theme .undo-button:hover {
+    background-color: #2a2a3e;
+}
+
+body.dark-theme .theme-toggle {
+    background-color: #0f3460;
+}
+
+/* --- Style dla trybu jasnego --- */
+body.light-theme {
+    background-color: #DDE9F5;
+}
+
+body.light-theme .chat-container {
+    background-color: #E6F0F8;
+}
+
+body.light-theme .character-name {
+    color: #3C4B64;
+}
+
+body.light-theme .speech-bubble {
+    background-color: #FFFFFF;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .chat-footer {
+    background-color: #FFFFFF;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .undo-button {
+    background-color: #F0F0F0;
+    color: #777;
+}
+
+body.light-theme .undo-button:hover {
+    background-color: #E0E0E0;
+}
+
+body.light-theme .theme-toggle {
+    background-color: #DDEAF3;
 }
