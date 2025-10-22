@@ -1,11 +1,27 @@
-import openai
+import google.generativeai as genai
 import os
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+genai.configure(api_key=os.getenv("GOOGLE_AI_API_KEY"))
 
-def get_embedding(text: str) -> list[float]:
-    response = openai.embeddings.create(
-        model="text-embedding-3-small",
-        input=text
+EMBEDDING_MODEL = "text-embedding-004"
+
+
+def create_embedding(text: str) -> dict:
+    if not text or not text.strip():
+        raise ValueError("Tekst do embeddingu nie może być pusty.")
+
+    result = genai.embed_content(
+        model=EMBEDDING_MODEL,
+        content=text,
+        task_type="retrieval_document"
     )
-    return response.data[0].embedding
+
+    embedding_vector = result["embedding"]
+
+    embedding_data = {
+        "text": text,
+        "embedding": embedding_vector
+    }
+
+    return embedding_data
+
