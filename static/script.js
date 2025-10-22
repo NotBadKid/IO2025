@@ -1,21 +1,73 @@
-document.getElementById('mic-button').addEventListener('click', startMicrophone);
- async function startMicrophone() {
+let isRecording = false;
+let mediaRecorder;
+let audioChunks = [];
+let audioStream;
+
+document.getElementById('mic-button').addEventListener('click', toggleRecording);
+async function toggleRecording() {
+            if (isRecording) {
+                // Stop recording and save the file
+                mediaRecorder.stop();
+            } else {
+                // Start recording
+                await startRecording();
+            }
+            isRecording = !isRecording;
+        }
+
+        async function startRecording() {
             try {
-                // Request microphone access
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                // Get user media (microphone)
+                audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-                // Grab the audio element
-                const audioElement = document.getElementById('audioElement');
+                // Create a MediaRecorder instance
+                mediaRecorder = new MediaRecorder(audioStream);
 
-                // Set the audio element's source to the stream
-                audioElement.srcObject = stream;
+                // Collect audio data as chunks
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
 
-                // Optional: Automatically play the audio once the stream is ready
-                audioElement.play();
+                // Once recording stops, save the audio file
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+
+                    // Create a new FormData object to send the Blob to the server
+                    const formData = new FormData();
+                    formData.append('audio', audioBlob, 'audio.wav');
+
+                    // Send the audio file to the server
+                    await saveAudio(formData);
+
+                    // Reset audioChunks for next recording
+                    audioChunks = [];
+                };
+
+                // Start recording
+                mediaRecorder.start();
             } catch (error) {
-                console.error('Error accessing microphone: ', error);
+                console.error('Error starting microphone: ', error);
             }
         }
+
+async function saveAudio(formData) {
+    try {
+        const response = await fetch('/ask', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        if (response.ok) {
+            console.log('Audio processed successfully:', data);
+            // You can handle the response here, like showing the answer or audio URL
+        } else {
+            console.error('Failed to process audio:', data.error);
+        }
+    } catch (error) {
+        console.error('Error during fetch:', error);
+    }
+}
+
 
 //document.getElementById('mic-button').addEventListener('click', function() {
 //    // Get the value from the textarea
@@ -42,3 +94,37 @@ document.getElementById('mic-button').addEventListener('click', startMicrophone)
 //        console.error('Error:', error); // Handle any errors
 //    });
 //});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+
+    themeToggle.addEventListener('click', function() {
+        // Przełączanie klasy na body
+        body.classList.toggle('dark-theme');
+        body.classList.toggle('light-theme');
+
+        // Aktualizacja wyglądu przełącznika
+        updateToggleAppearance();
+    });
+
+    function updateToggleAppearance() {
+        const iconSun = document.querySelector('.icon-sun');
+        const toggleNight = document.querySelector('.toggle-night-selected');
+
+        if (body.classList.contains('dark-theme')) {
+            // Tryb ciemny aktywny - księżyc podświetlony
+            iconSun.style.filter = 'saturate(0.5)';
+            iconSun.style.backgroundColor = 'transparent';
+            toggleNight.style.backgroundColor = '#4A90E2';
+        } else {
+            // Tryb jasny aktywny - słońce podświetlone
+            iconSun.style.filter = 'saturate(1)';
+            iconSun.style.backgroundColor = '#4A90E2';
+            toggleNight.style.backgroundColor = 'transparent';
+        }
+    }
+
+    // Inicjalizacja wyglądu przełącznika przy ładowaniu strony
+    updateToggleAppearance();
+});
