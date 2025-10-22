@@ -1,0 +1,160 @@
+/* --- Podstawowe ustawienia strony --- */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #DDE9F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* --- Główny kontener aplikacji --- */
+.chat-container {
+    width: 375px;
+    min-height: 650px;
+    background-color: #E6F0F8;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- 1. Górny pasek (Header) --- */
+.chat-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 20px 10px;
+    align-items: center;
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    background-color: #DDEAF3;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.icon-sun {
+    font-size: 24px;
+    margin-right: 8px;
+    filter: saturate(0.5); 
+}
+
+.toggle-night-selected {
+    background-color: #4A90E2;
+    border-radius: 15px;
+    padding: 4px 8px;
+    line-height: 1;
+}
+
+.icon-moon {
+    font-size: 20px;
+    color: white;
+    display: block;
+}
+
+/* --- 2. Główna zawartość (Body) --- */
+.chat-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px 0;
+    position: relative;
+}
+
+.character-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #3C4B64;
+    margin-bottom: 15px;
+}
+
+.speech-bubble {
+    background-color: #FFFFFF;
+    padding: 15px 25px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.character-avatar {
+    width: 340px; /* Zwiększony rozmiar */
+    height: auto;
+    margin-top: auto; /* Przesuwa lisa na sam dół */
+    margin-bottom: -5px; /* Minimalne przesunięcie, aby dotykał białego panelu */
+    object-fit: contain;
+    max-width: 100%;
+    /* Usunięte border-radius: 50% - teraz nie będzie okrągły */
+    border-radius: 0; /* Wyłączone zaokrąglenie */
+}
+
+/* --- 3. Dolny panel (Footer) --- */
+.chat-footer {
+    background-color: #FFFFFF;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 90px;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.mic-button {
+    background-color: #F2856D;
+    border: none;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(242, 133, 109, 0.4);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.mic-button:hover {
+    transform: scale(1.05);
+}
+
+.mic-button:active {
+    background-color: #E07A63;
+    transform: scale(0.98);
+}
+
+.undo-button {
+    background-color: #F0F0F0;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    color: #777;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: background-color 0.2s ease;
+}
+
+.undo-button:hover {
+    background-color: #E0E0E0;
+}
