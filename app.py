@@ -1,8 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from services import speech_to_text, text_filter, embeddings, qdrant_db, llm_client, tts
 import os
 
 app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 @app.route("/ask", methods=["POST"])
 def ask():
