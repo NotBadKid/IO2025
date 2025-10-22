@@ -1,13 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lisek Mądrusek Interfejs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-      <textarea id="userInput" placeholder="Type something here..."></textarea>
-        <button id="submitButton">Submit</button>
-    <script src="../static/script.js"></script>
+
+    <div class="chat-container">
+        
+        <div class="chat-header">
+            <div class="theme-toggle">
+                <span class="icon-sun">☀️</span>
+                <div class="toggle-night-selected">
+                    <span class="icon-moon">🌙</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-body">
+            <span class="character-name">Lisek Mądrusek</span>
+            
+            <div class="speech-bubble">
+                Woda wrze w 100°C!
+            </div>
+            
+            <img src="lis.png" alt="Awatar liska" class="character-avatar">
+        </div>
+
+        <div class="chat-footer">
+            <button class="mic-button">🎤</button>
+            <button class="undo-button">↩️</button>
+        </div>
+
+    </div>
+
 </body>
 </html>
