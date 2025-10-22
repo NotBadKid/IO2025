@@ -42,3 +42,38 @@ document.getElementById('mic-button').addEventListener('click', startMicrophone)
 //        console.error('Error:', error); // Handle any errors
 //    });
 //});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+    
+    themeToggle.addEventListener('click', function() {
+        // Przełączanie klasy na body
+        body.classList.toggle('dark-theme');
+        body.classList.toggle('light-theme');
+        
+        // Aktualizacja wyglądu przełącznika
+        updateToggleAppearance();
+    });
+    
+    function updateToggleAppearance() {
+        const iconSun = document.querySelector('.icon-sun');
+        const toggleNight = document.querySelector('.toggle-night-selected');
+        
+        if (body.classList.contains('dark-theme')) {
+            // Tryb ciemny aktywny - księżyc podświetlony
+            iconSun.style.filter = 'saturate(0.5)';
+            iconSun.style.backgroundColor = 'transparent';
+            toggleNight.style.backgroundColor = '#4A90E2';
+        } else {
+            // Tryb jasny aktywny - słońce podświetlone
+            iconSun.style.filter = 'saturate(1)';
+            iconSun.style.backgroundColor = '#4A90E2';
+            toggleNight.style.backgroundColor = 'transparent';
+        }
+    }
+    
+    // Inicjalizacja wyglądu przełącznika przy ładowaniu strony
+    updateToggleAppearance();
+});
+
