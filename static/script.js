@@ -5,50 +5,50 @@ let audioStream;
 
 document.getElementById('mic-button').addEventListener('click', toggleRecording);
 async function toggleRecording() {
-            if (isRecording) {
-                // Stop recording and save the file
-                mediaRecorder.stop();
-            } else {
-                // Start recording
-                await startRecording();
-            }
-            isRecording = !isRecording;
-        }
+    if (isRecording) {
+        // Stop recording and save the file
+        mediaRecorder.stop();
+    } else {
+        // Start recording
+        await startRecording();
+    }
+    isRecording = !isRecording;
+}
 
-        async function startRecording() {
-            try {
-                // Get user media (microphone)
-                audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+async function startRecording() {
+    try {
+        // Get user media (microphone)
+        audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-                // Create a MediaRecorder instance
-                mediaRecorder = new MediaRecorder(audioStream);
+        // Create a MediaRecorder instance for 'audio/webm' format
+        mediaRecorder = new MediaRecorder(audioStream, { mimeType: 'audio/webm' });
 
-                // Collect audio data as chunks
-                mediaRecorder.ondataavailable = event => {
-                    audioChunks.push(event.data);
-                };
+        // Collect audio data as chunks
+        mediaRecorder.ondataavailable = event => {
+            audioChunks.push(event.data);
+        };
 
-                // Once recording stops, save the audio file
-                mediaRecorder.onstop = async () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        // Once recording stops, save the audio file
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
 
-                    // Create a new FormData object to send the Blob to the server
-                    const formData = new FormData();
-                    formData.append('audio', audioBlob, 'audio.wav');
+            // Create a new FormData object to send the Blob to the server
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'audio.webm');
 
-                    // Send the audio file to the server
-                    await saveAudio(formData);
+            // Send the audio file to the server
+            await saveAudio(formData);
 
-                    // Reset audioChunks for next recording
-                    audioChunks = [];
-                };
+            // Reset audioChunks for next recording
+            audioChunks = [];
+        };
 
-                // Start recording
-                mediaRecorder.start();
-            } catch (error) {
-                console.error('Error starting microphone: ', error);
-            }
-        }
+        // Start recording
+        mediaRecorder.start();
+    } catch (error) {
+        console.error('Error starting microphone: ', error);
+    }
+}
 
 async function saveAudio(formData) {
     try {
@@ -59,7 +59,7 @@ async function saveAudio(formData) {
         const data = await response.json();
         if (response.ok) {
             console.log('Audio processed successfully:', data);
-            // You can handle the response here, like showing the answer or audio URL
+            // Handle the response here (e.g., show the answer or audio URL)
         } else {
             console.error('Failed to process audio:', data.error);
         }
@@ -67,6 +67,7 @@ async function saveAudio(formData) {
         console.error('Error during fetch:', error);
     }
 }
+
 
 
 //document.getElementById('mic-button').addEventListener('click', function() {

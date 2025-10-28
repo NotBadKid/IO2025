@@ -20,6 +20,8 @@ def transcribe_audio_data(audio: sr.AudioData) -> str:
     Transkrybuje obiekt `sr.AudioData` używając Google Web Speech API (lokalny wrapper).
     Zwraca rozpoznany tekst lub rzuca RuntimeError z komunikatem w języku polskim.
     """
+    print("Audio duration (s):", len(audio.get_raw_data()) / audio.sample_rate / audio.sample_width)
+    print("Sample rate:", audio.sample_rate)
     try:
         return _recognizer.recognize_google(audio, language="pl-PL")
     except sr.UnknownValueError:
