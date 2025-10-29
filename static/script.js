@@ -59,7 +59,7 @@ async function saveAudio(formData) {
         const data = await response.json();
         if (response.ok) {
             console.log('Audio processed successfully:', data);
-            // Handle the response here (e.g., show the answer or audio URL)
+            document.getElementById("speech-bubble").innerHTML = data.answer
         } else {
             console.error('Failed to process audio:', data.error);
         }

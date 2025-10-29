@@ -13,7 +13,7 @@ def init_collection():
     except Exception:
         client.create_collection(
             collection_name=COLLECTION_NAME,
-            vectors_config=models.VectorParams(size=1536, distance=models.Distance.COSINE),
+            vectors_config=models.VectorParams(size=768, distance=models.Distance.COSINE),
         )
 
 init_collection()

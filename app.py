@@ -50,15 +50,17 @@ def ask():
         traceback.print_exc()
         return {"error": str(e)}, 500
 
-    # Continue with your processing pipeline...
-    query_vector = embeddings.create_embedding(text)
-    similar = qdrant_db.search_similar(query_vector)
+    # # Continue with your processing pipeline...
+    # print(text)
+    # query_vector = embeddings.create_embedding(text)
+    # print(query_vector["embedding"])
+    # similar = qdrant_db.search_similar(query_vector["embedding"])
 
-    if similar:
+    if False:
         answer = similar
     else:
         answer = llm_client.explain_and_answer(text)
-        qdrant_db.save_entry(text, answer, query_vector['embedding'])
+        #qdrant_db.save_entry(text, answer, query_vector['embedding'])
 
     audio_url = tts.text_to_speech(answer)
 

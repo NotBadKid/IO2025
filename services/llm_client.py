@@ -27,6 +27,6 @@ def explain_and_answer(query: str) -> str:
         f"Zapytanie: {query}"
     )
 
-    if os.getenv("GEMINI_API_KEY"):
+    if os.getenv("GOOGLE_AI_API_KEY"):
         return _gemini_generate(prompt)
     raise RuntimeError("Brak klucza LLM (ustaw `GEMINI_API_KEY` lub `OPENAI_API_KEY`).")
